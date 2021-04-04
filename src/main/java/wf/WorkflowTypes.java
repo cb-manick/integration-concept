@@ -45,6 +45,19 @@ public class WorkflowTypes {
     }
 
     public void registerActivityType(){
+        try {
+            System.out.println("** Registering the workflow type '" + WORKFLOW +
+                    "-" + WORKFLOW_VERSION + "'.");
+            swf.registerWorkflowType(new RegisterWorkflowTypeRequest()
+                    .withDomain(DOMAIN)
+                    .withName(WORKFLOW)
+                    .withVersion(WORKFLOW_VERSION)
+                    .withDefaultChildPolicy(ChildPolicy.TERMINATE)
+                    .withDefaultTaskList(new TaskList().withName(TASKLIST))
+                    .withDefaultTaskStartToCloseTimeout("30"));
+        } catch (TypeAlreadyExistsException e) {
+            System.out.println("** Workflow type already exists!");
+        }
 
     }
 
